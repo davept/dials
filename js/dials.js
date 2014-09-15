@@ -1,3 +1,5 @@
+'use strict';
+
 (function ($) {
     $.fn.dial = function (options) {
 
@@ -8,20 +10,33 @@
             oldPercentAt = -1;
 
         function injectDial(dial, txt) {
-            var ul = "<li class='q{0} slice'><div class='circle' /></li>",
+            var li = "<li class='q{0} slice'><div class='circle' /></li>",
                 html = "<ul class='circle'>" +
-                    ul.replace('{0}', '1') +
-                    ul.replace('{0}', '2') +
-                    ul.replace('{0}', '3') +
-                    ul.replace('{0}', '4') +
+                    li.replace('{0}', '1') +
+                    li.replace('{0}', '2') +
+                    li.replace('{0}', '3') +
+                    li.replace('{0}', '4') +
                     "</ul><div class=\"dialText\"><p class=\"dialTitle\" /><p class=\"dialDesc\">" +
                     txt +
-                    "</p></div>";
+                    "</p></div>",
+            // formula to find largest square that fits inside a circle: sqrt((r * 2)^2 / 2)
+                boxWidth = Math.sqrt(Math.pow(settings.width, 2) / 2) * .85;
 
-            dial.html(html).addClass('dial');
+            dial.html(html).addClass('dial')
+                .css('width', settings.width + 'px')
+                .children('ul')
+                .css('background-image', 'url(\'' + settings.img_0 + '\')');
 
-            dial.children('ul').css('background-image', 'url(\'' + settings.img_0 + '\')');
-            dial.find('.q1 div, .q2 div, .q3 div, .q4 div').css('background-image', 'url(\'' + settings.img_100 + '\')');
+            dial.find('.q1 div, .q2 div, .q3 div, .q4 div')
+                .css('background-image', 'url(\'' + settings.img_100 + '\')');
+
+            dial.find('.dialText')
+                .css({
+                    'width': boxWidth + 'px',
+                    'height': boxWidth + 'px',
+                    'margin-left': (settings.width - boxWidth) / 2 + 'px',
+                    'margin-top': -(settings.width * .92) + 'px'
+                });
         }
 
         function segment(quadrant, inner) {
@@ -82,7 +97,8 @@
             percentage: 85,
             text: '',
             img_0: 'img/circle_0.svg',
-            img_100: 'img/circle_100.svg'
+            img_100: 'img/circle_100.svg',
+            width: 120
         }, options);
 
         percentageDegrees = Math.floor(360 * settings.percentage / 100);
