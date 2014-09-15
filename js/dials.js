@@ -1,24 +1,27 @@
-﻿(function ($) {
+(function ($) {
     $.fn.dial = function (options) {
 
         var index = 0,
-                    data = [],
-                    percentageDegrees,
-                    dialLabel,
-                    oldPercentAt = -1;
+            data = [],
+            percentageDegrees,
+            dialLabel,
+            oldPercentAt = -1;
 
         function injectDial(dial, txt) {
             var ul = "<li class='q{0} slice'><div class='circle' /></li>",
-                        html = "<ul class='circle'>" +
-                               ul.replace('{0}', '1') +
-                               ul.replace('{0}', '2') +
-                               ul.replace('{0}', '3') +
-                               ul.replace('{0}', '4') +
-                               "</ul><div class=\"dialText\"><p class=\"dialTitle\" /><p class=\"dialDesc\">" +
-                               txt +
-                               "</p></div>";
+                html = "<ul class='circle'>" +
+                    ul.replace('{0}', '1') +
+                    ul.replace('{0}', '2') +
+                    ul.replace('{0}', '3') +
+                    ul.replace('{0}', '4') +
+                    "</ul><div class=\"dialText\"><p class=\"dialTitle\" /><p class=\"dialDesc\">" +
+                    txt +
+                    "</p></div>";
 
             dial.html(html).addClass('dial');
+
+            dial.children('ul').css('background-image', 'url(\'' + settings.img_0 + '\')');
+            dial.find('.q1 div, .q2 div, .q3 div, .q4 div').css('background-image', 'url(\'' + settings.img_100 + '\')');
         }
 
         function segment(quadrant, inner) {
@@ -33,9 +36,9 @@
                 var cssSelector = dialId + ' .q' + (i + 1);
 
                 data.push(new segment(
-                            $(cssSelector),
-                            $(cssSelector + ' div')
-                        ));
+                    $(cssSelector),
+                    $(cssSelector + ' div')
+                ));
             }
 
             data[0].rot = 'rotate(90deg)';
@@ -63,7 +66,7 @@
             }
 
             var degreesAt = index * 90 + angle,
-                        percentAt = Math.floor(degreesAt / 360 * 100);
+                percentAt = Math.floor(degreesAt / 360 * 100);
 
             if (percentAt != oldPercentAt) {
                 oldPercentAt = percentAt;
@@ -77,7 +80,9 @@
         var settings = $.extend({
             step: 3,
             percentage: 85,
-            text: ''
+            text: '',
+            img_0: 'img/circle_0.svg',
+            img_100: 'img/circle_100.svg'
         }, options);
 
         percentageDegrees = Math.floor(360 * settings.percentage / 100);
