@@ -51,7 +51,6 @@
     visibility: hidden;
     z-index: -1;
 }
-/* Width of this square calculated from radius of circle: sqrt((r * 2)^2 / 2) */
 .dialText {
     text-align: center;
     z-index: 10;

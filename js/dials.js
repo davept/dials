@@ -19,8 +19,9 @@
                     "</ul><div class=\"dialText\"><p class=\"dialTitle\" /><p class=\"dialDesc\">" +
                     txt +
                     "</p></div>",
+                _floor = Math.floor,
             // formula to find largest square that fits inside a circle: sqrt((r * 2)^2 / 2)
-                boxWidth = Math.sqrt(Math.pow(settings.width, 2) / 2) * .85;
+                boxWidth = _floor(Math.sqrt(Math.pow(settings.width, 2) / 2) * .85);
 
             dial.html(html).addClass('dial')
                 .css('width', settings.width + 'px')
@@ -34,8 +35,8 @@
                 .css({
                     'width': boxWidth + 'px',
                     'height': boxWidth + 'px',
-                    'margin-left': (settings.width - boxWidth) / 2 + 'px',
-                    'margin-top': -(settings.width * .92) + 'px'
+                    'margin-left': _floor((settings.width - boxWidth) / 2) + 'px',
+                    'margin-top': _floor(-settings.width * .92) + 'px'
                 });
         }
 
